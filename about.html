@@ -69,7 +69,18 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script> 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script> 
+<script>
+   
+    const navToggle = document.getElementById('navToggleBtn');
+    const navLinks = document.getElementById('navLinks');
+    
 
+    if (navToggle && navLinks) {
+        navToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('open');
+        });
+    }
+</script>
 </body> 
 
 </html> 
