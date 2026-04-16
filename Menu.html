@@ -37,4 +37,17 @@
              <a class="nav-btn-ghost" href="orderonline.html">Order Online</a>
             </div>
         </nav>
+<script>
+   
+    const navToggle = document.getElementById('navToggleBtn');
+    const navLinks = document.getElementById('navLinks');
+    
 
+    if (navToggle && navLinks) {
+        navToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('open');
+        });
+    }
+</script>
+</body>
+</html> 
