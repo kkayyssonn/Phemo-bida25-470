@@ -1,48 +1,287 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The DEN Kitchen - Menu</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-<html lang="en"> 
+<!-- Navbar -->
+<nav class="main-navbar">
+    <div class="logo-area">
+        <img src="logo.png" alt="The DEN" class="logo-img">
+    </div>
+    <button class="nav-toggle" id="navToggleBtn">☰</button>
+    <div class="nav-links" id="navLinks">
+        <a class="nav-btn-ghost" href="index.html">Home</a>
+        <a class="nav-btn-ghost" href="about.html">About</a>
+        <a class="nav-btn-ghost" href="contact.html">Contact</a>
+        <a class="nav-btn-ghost" href="menu.html">Menu</a>
+        <a class="nav-btn-ghost" href="orderonline.html">Order Online</a>
+    </div>
+</nav>
 
-<head> 
+<!-- Main Content -->
+<main>
+   <main> 
+<main class="container my-5"> 
+<div class="page-container">
+    <div class="glass-card text-center">
+        <h1><i class="bi bi-cup-straw"></i>Our Menu</h1>
+        <p>Choose a variety of freshly baked goods and artisanal breads which includes categories of Bagels, Breads, Rolls and Flat Breads</p>
+    </div>
 
-    <meta charset="UTF-8"> 
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-
-    <title>Menu</title> 
-    <!-- Bootstrap CSS --> 
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> 
-
-    <!-- Custom CSS --> 
-    <link rel="stylesheet" href="styles.css"> 
-
-</head> 
-
-<body> 
-
-    <header> 
-  <nav class="main-navbar">
-            <div class="logo-area">
-                <img src="logo.png" alt="The DEN" class="logo-img">
+        <!-- Bagels Section -->
+        <div class="menu-section">
+            <div class="section-header">
+                <i class="bi bi-bagel"></i>
+                <h2>Bagels</h2>
+                <div class="section-divider"></div>
             </div>
-
-           <button class="nav-toggle" id="navToggleBtn">☰</button>
-
-
-<div class="nav-links" id="navLinks">
-            <a class="nav-btn-ghost" href="index.html">Home</a>
-            <a class="nav-btn-ghost" href="about.html">About</a>
-            <a class="nav-btn-ghost" href="contact.html">Contact</a>
-            <a class="nav-btn-ghost" href="Menu.html">Menu</a>
-             <a class="nav-btn-ghost" href="orderonline.html">Order Online</a>
+            <div class="menu-grid">
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Plain</h3>
+                        <p>Classic plain bagel, perfect with any spread</p>
+                    </div>
+                    <div class="menu-item-price">P15.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Sesame</h3>
+                        <p>Toasted sesame seeds for a nutty flavor</p>
+                    </div>
+                    <div class="menu-item-price">P18.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Poppy</h3>
+                        <p>Crunchy poppy seed coated bagel</p>
+                    </div>
+                    <div class="menu-item-price">P18.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Everything</h3>
+                        <p>Loaded with poppy, sesame, garlic & onion</p>
+                    </div>
+                    <div class="menu-item-price">P20.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Health Mix</h3>
+                        <p>Seeds and grains blend for a healthy start</p>
+                    </div>
+                    <div class="menu-item-price">P20.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Blueberry</h3>
+                        <p>Sweet blueberry infused bagel</p>
+                    </div>
+                    <div class="menu-item-price">P20.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Cinnamon Raisin</h3>
+                        <p>Warm cinnamon with sweet raisins</p>
+                    </div>
+                    <div class="menu-item-price">P20.00</div>
+                </div>
             </div>
-        </nav>
+        </div>
+
+        <!-- Breads Section -->
+        <div class="menu-section">
+            <div class="section-header">
+                <i class="bi bi-basket"></i>
+                <h2>Artisan Breads</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Sourdough</h3>
+                        <p>Tangy, crusty artisan loaf with perfect crumb</p>
+                    </div>
+                    <div class="menu-item-price">P50.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Ciabatta</h3>
+                        <p>Italian rustic bread with airy texture</p>
+                    </div>
+                    <div class="menu-item-price">P50.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Multigrain Bread</h3>
+                        <p>Nutritious blend of multiple grains</p>
+                    </div>
+                    <div class="menu-item-price">P25.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Challah</h3>
+                        <p>Braided egg bread, slightly sweet and fluffy</p>
+                    </div>
+                    <div class="menu-item-price">P50.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Banana Bread</h3>
+                        <p>Moist, sweet loaf with ripe bananas</p>
+                    </div>
+                    <div class="menu-item-price">P25.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Baguette</h3>
+                        <p>Classic French bread, crispy outside, soft inside</p>
+                    </div>
+                    <div class="menu-item-price">P25.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Brioche Loaf</h3>
+                        <p>Rich, buttery French bread</p>
+                    </div>
+                    <div class="menu-item-price">P50.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Light Rye</h3>
+                        <p>Traditional rye with caraway seeds</p>
+                    </div>
+                    <div class="menu-item-price">P45.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Dark Rye</h3>
+                        <p>Bold, dense rye with deep flavor</p>
+                    </div>
+                    <div class="menu-item-price">P50.00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rolls Section -->
+        <div class="menu-section">
+            <div class="section-header">
+                <i class="bi bi-cup-straw"></i>
+                <h2>Rolls & Buns</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Simple Burger Bun</h3>
+                        <p>Classic soft burger bun</p>
+                    </div>
+                    <div class="menu-item-price">P4.50</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Milk Burger Bun</h3>
+                        <p>Rich, soft milk-based bun</p>
+                    </div>
+                    <div class="menu-item-price">P8.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Dinner Rolls</h3>
+                        <p>Soft, buttery rolls perfect for any meal</p>
+                    </div>
+                    <div class="menu-item-price">P3.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Garlic Knots</h3>
+                        <p>Twisted rolls with garlic butter & herbs</p>
+                    </div>
+                    <div class="menu-item-price">P3.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Cocktail Buns</h3>
+                        <p>Mini sweet buns for parties</p>
+                    </div>
+                    <div class="menu-item-price">P3.50</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flat Breads Section -->
+        <div class="menu-section">
+            <div class="section-header">
+                <i class="bi bi-grid-3x3-gap-fill"></i>
+                <h2>Flat Breads</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Pita (6 pcs)</h3>
+                        <p>Soft pocket bread, perfect for stuffing</p>
+                    </div>
+                    <div class="menu-item-price">P40.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Tortilla (6 pcs)</h3>
+                        <p>Soft flour tortillas for wraps & quesadillas</p>
+                    </div>
+                    <div class="menu-item-price">P40.00</div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="menu-item-info">
+                        <h3>Naan (6 pcs)</h3>
+                        <p>Traditional Indian flatbread, soft and pillowy</p>
+                    </div>
+                    <div class="menu-item-price">P40.00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order CTA -->
+        <div class="order-cta glass-card text-center">
+            <i class="bi bi-telephone-fill" style="font-size: 2rem; color: #c49a2b;"></i>
+            <h3>Ready to Order?</h3>
+            <p>Call us at <strong>75 943 834 or</strong> or order online for pickup/delivery</p>
+            <div class="btn-group-custom">
+                <a href="orderonline.html" class="btn-solid"><i class="bi bi-bag-heart"></i> Order Online</a>
+                <a href="contact.html" class="btn-outline-light" style="border-color: #c49a2b; color: #c49a2b;">Contact Us</a>
+            </div>
+        </div>
+
+        <!-- Tagline -->
+        <div class="text-center mt-5 mb-3">
+            <p class="text-muted fst-italic">• The Bread You Need •</p>
+        </div>
+    </div>
+</main>
+
+<footer class="main-footer">
+    <p>&copy; 2026 The DEN Kitchen - Artisan Bakery & Modern Comfort</p>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+<!-- Navigation Toggle Script -->
 <script>
-   
     const navToggle = document.getElementById('navToggleBtn');
     const navLinks = document.getElementById('navLinks');
     
-
     if (navToggle && navLinks) {
         navToggle.addEventListener('click', function() {
             navLinks.classList.toggle('open');
@@ -50,4 +289,4 @@
     }
 </script>
 </body>
-</html> 
+</html>
