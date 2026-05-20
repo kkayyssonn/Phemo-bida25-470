@@ -1,200 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About The DEN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-
-    <title>About The DEN</title> 
-      <!-- Bootstrap CSS --> 
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> 
-
-    <!-- Custom CSS --> 
-    <link rel="stylesheet" href="styles.css"> 
-
-</head> 
-
-<body> 
-
-    <header> 
-
-        <nav class="main-navbar">
-            <div class="logo-area">
-                <a href="index.html">
-                <img src="logo.png" alt="The DEN" class="logo-img">
-                </a>
-            </div>
-           <button class="nav-toggle" id="navToggleBtn">☰</button>
-
-
-<div class="nav-links" id="navLinks">
-            <a class="nav-btn-ghost" href="index.html">Home</a>
-            <a class="nav-btn-ghost" href="about.html">About</a>
-            <a class="nav-btn-ghost" href="contact.html">Contact Us</a>
-            <a class="nav-btn-ghost" href="Menu.html">Menu</a>
-             <a class="nav-btn-ghost" href="orderonline.html">Order Online</a>
-            </div>
-        </nav>
-
-
-    <main>
-        <div class="hero-section" id="mainHero">
-            <div class="hero-card">
-      <h1>Our Story</h1>
-<p>The Den began as an artisan bakery dedicated to mastering dough,
-fermentation and intentional food craft. Over time, we expanded
-into cafés, restaurants, makerts and events, consistently
-recognised for quality, flavour and consistency.</p>
-<p>We are now
-entering a new growth phase: scaling production, building
-structured manufacturing for artisan bread and frozen mass
-produced bread products, and positioning The Den as a leading
-modern food companies in Botswana.</p>
-</div>
-        </div>
-    </main>
-<div class="hero-section" id="mainHero">
-            <div class="hero-card">
-      <h1>Value Proposition</h1>
-      <p>Blending artisan technique
-with scalable production
-systems.</p>
-<p>Product lines across artisan
-bread, wholesale biscuits,
-deli caatering and frozen
-goods</p>
-<p>A trusted brand with existing
-demand from cafés,
-restaurants, and corporate
-clients.</p>
-<p>Ready distribution channeks
-through strategic partners</p>
-<p>First-mover advantage in
-larger scale bucket biscuit
-manufacturing locally</p>
-<p>High growth product
-categories with limired local
-competition</p>
+<!-- Cart Sidebar -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+        <h5><i class="bi bi-bag-fill"></i> Your Cart</h5>
+        <button class="btn-close btn-close-white" onclick="closeCart()"></button>
     </div>
-        </div>  
-    </main>
-    <main>
-        <div class="hero-section" id="mainHero">
-            <div class="hero-card">
-      <h1>The Production Capability</h1>
-      <p>The Den operates with
-documented SOPs and
-controlled production cycles,
-covering mixing, proofing,
-baking, cooling and packing. Our current setup supports
-consistent daily bread supply,
-while our biscuit line is being
-structured to support high
-volume, repeatable
-manufacturing of bucket
-biscuits. This foundation
-allows us to increase capacity
-with additional equipment and
-shifts without compromising
-on quality.</p>
+    <div class="cart-items" id="cartItemsList"><p class="text-muted text-center mt-4">Cart is empty</p></div>
+    <div class="cart-footer">
+        <div class="d-flex justify-content-between fw-bold fs-5"><span>Total</span><span id="cartTotalAmount">P0.00</span></div>
+        <button class="btn-solid w-100 mt-2" onclick="goToCheckout()">Proceed to Checkout <i class="bi bi-arrow-right"></i></button>
+        <button class="btn-outline w-100 mt-2" onclick="clearFullCart()" style="border-color:#aaa; color:#555;">Clear Cart</button>
+    </div>
+</div>
+
+<nav class="main-navbar">
+    <div class="logo-area">
+        <a href="index.html">
+            <img src="logo.png" alt="The DEN" class="logo-img" onerror="this.src='https://placehold.co/180x60/f5e6d3/b8860b?text=THE+DEN'">
+        </a>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <div class="cart-icon" onclick="openCart()"><i class="bi bi-cart3"></i><span class="cart-count" id="globalCartCount">0</span></div>
+        <button class="nav-toggle" id="navToggleBtn">☰</button>
+    </div>
+    <div class="nav-links" id="navLinks">
+        <a class="nav-btn-ghost" href="index.html">Home</a>
+        <a class="nav-btn-ghost" href="about.html">About</a>
+        <a class="nav-btn-ghost" href="contact.html">Contact</a>
+        <a class="nav-btn-ghost" href="menu.html">Menu</a>
+        <a class="nav-btn-ghost" href="orderonline.html">Order Online</a>
+    </div>
+</nav>
+
+<main style="flex: 1;">
+    <div class="page-container">
+        <div class="glass-card text-center" style="margin-bottom: 2rem;">
+            <h1><i class="bi bi-info-circle-fill"></i> About The DEN</h1>
+            <p style="max-width: 700px; margin: 0 auto;">Redefining artisan bakery craft in Botswana through quality, consistency and innovation.</p>
+        </div>
+
+        <div class="accordion-section" id="section1">
+            <div class="accordion-header" onclick="toggleSection(this)">
+                <h3><i class="bi bi-book-heart"></i> Our Story</h3>
+                <i class="bi bi-chevron-down accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-content-inner">
+                    <p>The DEN began as an artisan bakery dedicated to mastering dough, fermentation, and intentional food craft. Over time, we expanded into cafés, restaurants, markets, and events, consistently recognised for quality, flavour, and consistency.</p>
+                    <p class="mt-2">We are now entering a new growth phase: scaling production, building structured manufacturing for artisan bread and frozen mass-produced bread products, and positioning The DEN as a leading modern food company in Botswana.</p>
+                    <div class="stats-grid">
+                        <div><div class="stat-number">2018</div><div class="stat-label">Founded</div></div>
+                        <div><div class="stat-number">50+</div><div class="stat-label">Team Members</div></div>
+                        <div><div class="stat-number">10+</div><div class="stat-label">Partner Locations</div></div>
+                    </div>
+                </div>
             </div>
         </div>
-    </main>
-    <main>
-        <div class="hero-section" id="mainHero">
-            <div class="hero-card">
-        <h1>The Distribution and Market Position</h1>
-<p>Our distribution
-footprint currently
-includes cafés,
-restaurants, corporate
-oDices, event stand,
-growing wholesale
-networks.
-Through partners, we
-have direct access to
-mass-market channels
-for biscuits and future
-retail-ready product
-lines. This positions The
-Den ahead of typical
-bakery startups, which
-often struggle with
-route-to-market and
-logistics.</p>
+
+        <div class="accordion-section" id="section2">
+            <div class="accordion-header" onclick="toggleSection(this)">
+                <h3><i class="bi bi-gem"></i> Value Proposition</h3>
+                <i class="bi bi-chevron-down accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-content-inner">
+                    <div class="value-grid">
+                        <div class="value-card"><i class="bi bi-cup-straw fs-1"></i><h4>Artisan Quality</h4><p>Handcrafted with premium ingredients</p></div>
+                        <div class="value-card"><i class="bi bi-lightbulb fs-1"></i><h4>Innovation</h4><p>Modern manufacturing meeting artisanal excellence</p></div>
+                        <div class="value-card"><i class="bi bi-check2-circle fs-1"></i><h4>Consistency</h4><p>Reliable quality across every batch</p></div>
+                        <div class="value-card"><i class="bi bi-people fs-1"></i><h4>Local Roots</h4><p>Proudly Botswana-owned and operated</p></div>
+                    </div>
+                </div>
             </div>
         </div>
-    </main>
 
-<main>
-        <div class="hero-section" id="mainHero">
-            <div class="hero-card">
-        <h1>Why Choose The Den</h1>
-        <p>Innovation-led, but grounded
-indiscipline.
-Capable of supplying both
-artisan and higher-volume
-products.
-Strong brand alignment with
-modern, quality-focused food
-culture.
-Flexible enough to
-collaborate, structured
-enough to deliver.
-Positioned for future
-automation, retail expansion
-and regional reach.
-Built on real craft — not
-shortcuts.</p>
+        <div class="accordion-section" id="section3">
+            <div class="accordion-header" onclick="toggleSection(this)">
+                <h3><i class="bi bi-building-factory"></i> Production Capability</h3>
+                <i class="bi bi-chevron-down accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-content-inner">
+                    <ul class="capability-list">
+                        <li><i class="bi bi-check-lg"></i> State-of-the-art artisan bakery facility</li>
+                        <li><i class="bi bi-check-lg"></i> Daily production capacity of 5,000+ units</li>
+                        <li><i class="bi bi-check-lg"></i> Frozen bread and par-baked product line</li>
+                        <li><i class="bi bi-check-lg"></i> Custom product development for B2B clients</li>
+                    </ul>
+                    <div class="stats-grid">
+                        <div><div class="stat-number">5,000+</div><div class="stat-label">Daily Units</div></div>
+                        <div><div class="stat-number">24/7</div><div class="stat-label">Production</div></div>
+                        <div><div class="stat-number">20+</div><div class="stat-label">Product Varieties</div></div>
+                    </div>
+                </div>
             </div>
         </div>
-    </main>
 
- </div>
-        </div>
-    </main>
-
-<main>
-        <div class="hero-section" id="mainHero">
-            <div class="hero-card">
-        <h1>Client Portfolio</h1>
-        <p>We have worked with a range
-of clients across different
-contexts, including:
-Cafés and restaurants seeking
-artisan bread supply.
-Public events and markets
-with high foot traffic.
-Private celebrations and
-intimate gatherings.
-Hospitality and tourismaligned dining experiences,
-each engagement is treated
-with the same level of care,
-planning and execution.</p>
+        <div class="accordion-section" id="section4">
+            <div class="accordion-header" onclick="toggleSection(this)">
+                <h3><i class="bi bi-truck"></i> Distribution & Market Position</h3>
+                <i class="bi bi-chevron-down accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-content-inner">
+                    <p><strong>Market Position:</strong> The DEN is emerging as a premier artisan bread manufacturer in Botswana.</p>
+                    <ul class="capability-list">
+                        <li><i class="bi bi-geo-alt-fill"></i> Direct delivery across Gaborone</li>
+                        <li><i class="bi bi-shop"></i> Retail partnerships with leading supermarkets</li>
+                        <li><i class="bi bi-graph-up"></i> Expanding to Francistown and Maun in 2026</li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </main> 
 
-<main>
+        <div class="glass-card text-center" style="margin-top: 2rem;">
+            <i class="bi bi-chat-dots" style="font-size: 2rem; color: #b8860b;"></i>
+            <h3>Partner With Us</h3>
+            <p>Interested in wholesale, distribution, or custom products? Let's talk.</p>
+            <a href="contact.html" class="btn-solid">Contact Our Team</a>
+        </div>
+    </div>
+</main>
+
 <footer class="main-footer">
     <p>&copy; 2026 The DEN Kitchen - Artisan Bakery & Modern Comfort</p>
 </footer>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-</main>
-
 <script>
+    function toggleSection(headerElement) {
+        const accordionSection = headerElement.closest('.accordion-section');
+        if (accordionSection.classList.contains('active')) {
+            accordionSection.classList.remove('active');
+        } else {
+            accordionSection.classList.add('active');
+        }
+    }
+
+    // ========== CART FUNCTIONS ==========
+    let cart = JSON.parse(localStorage.getItem('denCart')) || [];
+
+    function saveCart() { localStorage.setItem('denCart', JSON.stringify(cart)); updateCartUI(); }
+
+    function updateCartUI() {
+        const count = cart.reduce((s, i) => s + i.qty, 0);
+        document.querySelectorAll('#globalCartCount').forEach(el => { if(el) el.innerText = count; });
+        const container = document.getElementById('cartItemsList');
+        const totalSpan = document.getElementById('cartTotalAmount');
+        if(!container) return;
+        if(cart.length === 0) { container.innerHTML = '<p class="text-muted text-center mt-4">Cart is empty 🍞</p>'; if(totalSpan) totalSpan.innerText = 'P0.00'; return; }
+        let html = '', total = 0;
+        cart.forEach((item, idx) => { let itemTotal = item.price * item.qty; total += itemTotal;
+            html += `<div class="cart-item"><div><strong>${item.name}</strong><br><small>P${item.price} each</small></div>
+            <div class="cart-item-actions"><button onclick="updateQty(${idx},-1)">-</button><span class="mx-1">${item.qty}</span><button onclick="updateQty(${idx},1)">+</button>
+            <button onclick="removeItem(${idx})" style="background:none; color:#999;">🗑</button></div><div>P${itemTotal.toFixed(2)}</div></div>`;
+        });
+        container.innerHTML = html; totalSpan.innerText = `P${total.toFixed(2)}`;
+    }
+
+    function updateQty(idx, delta) { let newQty = cart[idx].qty + delta; if(newQty <= 0) cart.splice(idx,1); else cart[idx].qty = newQty; saveCart(); }
+    function removeItem(idx) { cart.splice(idx,1); saveCart(); showToast('Item removed'); }
+    function clearFullCart() { if(confirm('Clear cart?')) { cart = []; saveCart(); closeCart(); showToast('Cart cleared'); } }
+    function showToast(msg) { let t = document.createElement('div'); t.className = 'toast-msg'; t.innerHTML = msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2000); }
+    function openCart() { document.getElementById('cartSidebar').classList.add('open'); document.getElementById('cartOverlay').style.display = 'block'; }
+    function closeCart() { document.getElementById('cartSidebar').classList.remove('open'); document.getElementById('cartOverlay').style.display = 'none'; }
+    function goToCheckout() { closeCart(); window.location.href = 'orderonline.html'; }
+
     const navToggle = document.getElementById('navToggleBtn');
     const navLinks = document.getElementById('navLinks');
-    
     if (navToggle && navLinks) {
-        navToggle.addEventListener('click', function() {
-            navLinks.classList.toggle('open');
-        });
+        navToggle.addEventListener('click', function() { navLinks.classList.toggle('open'); });
     }
+
+    updateCartUI();
 </script>
 </body>
 </html>
