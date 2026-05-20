@@ -1,92 +1,443 @@
 <!DOCTYPE html> 
-
 <html lang="en"> 
-
 <head> 
-
     <meta charset="UTF-8"> 
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-
-    <title>Order Online</title> 
-    <!-- Bootstrap CSS --> 
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> 
-
-    <!-- Custom CSS --> 
-    <link rel="stylesheet" href="styles.css"> 
-
+    <title>Order Online - The DEN Kitchen</title> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .order-summary-card {
+            background: #fef8f0;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #f0e0c0;
+        }
+        .cart-item-summary {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        .empty-cart-message {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+        }
+        .form-floating-custom { margin-bottom: 1.2rem; }
+        .form-floating-custom input,
+        .form-floating-custom textarea,
+        .form-floating-custom select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 1rem;
+        }
+        .form-floating-custom input:focus,
+        .form-floating-custom textarea:focus,
+        .form-floating-custom select:focus {
+            outline: none;
+            border-color: #b8860b;
+            box-shadow: 0 0 0 3px rgba(184,134,11,0.1);
+        }
+        .form-floating-custom label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: block;
+            color: #555;
+        }
+        .payment-option {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .payment-option:hover { border-color: #b8860b; background: #fef8f0; }
+        .payment-option.selected { border-color: #b8860b; background: #fef8f0; }
+        .success-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            z-index: 2000;
+            animation: slideInRight 0.3s ease;
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
 </head> 
-
 <body> 
 
-    <header> 
- <nav class="main-navbar">
-            <div class="logo-area">
-                <a href="index.html">
-                <img src="logo.png" alt="The DEN" class="logo-img">
-                </a>
+<!-- Cart Sidebar -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+        <h5><i class="bi bi-bag-fill"></i> Your Cart</h5>
+        <button class="btn-close btn-close-white" onclick="closeCart()"></button>
+    </div>
+    <div class="cart-items" id="cartItemsList"><p class="text-muted text-center mt-4">Cart is empty</p></div>
+    <div class="cart-footer">
+        <div class="d-flex justify-content-between fw-bold fs-5"><span>Total</span><span id="cartTotalAmount">P0.00</span></div>
+        <button class="btn-solid w-100 mt-2" onclick="goToCheckout()">Proceed to Checkout <i class="bi bi-arrow-right"></i></button>
+        <button class="btn-outline w-100 mt-2" onclick="clearFullCart()" style="border-color:#aaa; color:#555;">Clear Cart</button>
+    </div>
+</div>
+
+<nav class="main-navbar">
+    <div class="logo-area">
+        <a href="index.html">
+            <img src="logo.png" alt="The DEN" class="logo-img" onerror="this.src='https://placehold.co/180x60/f5e6d3/b8860b?text=THE+DEN'">
+        </a>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <div class="cart-icon" onclick="openCart()"><i class="bi bi-cart3"></i><span class="cart-count" id="globalCartCount">0</span></div>
+        <button class="nav-toggle" id="navToggleBtn">☰</button>
+    </div>
+    <div class="nav-links" id="navLinks">
+        <a class="nav-btn-ghost" href="index.html">Home</a>
+        <a class="nav-btn-ghost" href="about.html">About</a>
+        <a class="nav-btn-ghost" href="contact.html">Contact</a>
+        <a class="nav-btn-ghost" href="menu.html">Menu</a>
+        <a class="nav-btn-ghost" href="orderonline.html">Order Online</a>
+    </div>
+</nav>
+
+<main style="flex: 1;">
+    <div class="hero-section" style="padding: 2rem;">
+        <div class="page-container">
+            <div class="hero-card">
+                <h1><i class="bi bi-cart-check-fill"></i> Complete Your Order</h1>
+                <p>Review your cart, fill in your details, and place your order. We'll confirm via SMS/WhatsApp.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-container">
+        <div class="row g-4">
+            <!-- Order Summary Column -->
+            <div class="col-lg-5">
+                <div class="glass-card">
+                    <h4><i class="bi bi-receipt"></i> Your Order Summary</h4>
+                    <div id="orderSummaryContainer"></div>
+                    
+                    <div class="mt-3 pt-3 border-top">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">P0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Delivery Fee:</span>
+                            <span id="deliveryFeeDisplay">P0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between fw-bold fs-5 mt-2 pt-2 border-top">
+                            <span>Total:</span>
+                            <span id="totalAmount" style="color: #b8860b;">P0.00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <a href="menu.html" class="btn-outline w-100 mb-2"><i class="bi bi-plus-circle"></i> Add More Items</a>
+                        <button class="btn-outline w-100" onclick="clearFullCart()" style="border-color:#dc3545; color:#dc3545;"><i class="bi bi-trash"></i> Clear Cart</button>
+                    </div>
+                </div>
+                
+                <div class="glass-card mt-4">
+                    <h5><i class="bi bi-info-circle"></i> Order Info</h5>
+                    <ul class="list-unstyled small">
+                        <li><i class="bi bi-check-circle text-success"></i> Freshly baked on order day</li>
+                        <li><i class="bi bi-check-circle text-success"></i> Minimum order P50 for pickup</li>
+                        <li><i class="bi bi-check-circle text-success"></i> Minimum order P150 for delivery</li>
+                        <li><i class="bi bi-clock"></i> Delivery within 90 minutes (Gaborone)</li>
+                    </ul>
+                </div>
             </div>
 
-           <button class="nav-toggle" id="navToggleBtn">☰</button>
-
-
-<div class="nav-links" id="navLinks">
-            <a class="nav-btn-ghost" href="index.html">Home</a>
-            <a class="nav-btn-ghost" href="about.html">About</a>
-            <a class="nav-btn-ghost" href="contact.html">Contact</a>
-            <a class="nav-btn-ghost" href="Menu.html">Menu</a>
-             <a class="nav-btn-ghost" href="orderonline.html">Order Online</a>
+            <!-- Order Form Column -->
+            <div class="col-lg-7">
+                <div class="glass-card">
+                    <h4><i class="bi bi-person-badge"></i> Delivery & Payment Details</h4>
+                    
+                    <form id="orderForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-floating-custom">
+                                    <label for="fullName"><i class="bi bi-person"></i> Full Name *</label>
+                                    <input type="text" id="fullName" class="form-control" placeholder="John Doe" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating-custom">
+                                    <label for="phone"><i class="bi bi-telephone"></i> Phone Number *</label>
+                                    <input type="tel" id="phone" class="form-control" placeholder="+267 75 943 834" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating-custom">
+                                    <label for="email"><i class="bi bi-envelope"></i> Email (optional)</label>
+                                    <input type="email" id="email" class="form-control" placeholder="hello@example.com">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating-custom">
+                                    <label for="orderType"><i class="bi bi-truck"></i> Order Type *</label>
+                                    <select id="orderType" class="form-control" required>
+                                        <option value="">Select...</option>
+                                        <option value="pickup">Pickup (Free)</option>
+                                        <option value="delivery">Delivery (P30 fee)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12" id="addressField" style="display: none;">
+                                <div class="form-floating-custom">
+                                    <label for="address"><i class="bi bi-geo-alt"></i> Delivery Address *</label>
+                                    <textarea id="address" rows="2" class="form-control" placeholder="Street name, plot number, landmark..."></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating-custom">
+                                    <label for="pickupTime"><i class="bi bi-clock"></i> Preferred Pickup/Delivery Time</label>
+                                    <input type="datetime-local" id="pickupTime" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating-custom">
+                                    <label for="specialInstructions"><i class="bi bi-chat-text"></i> Special Instructions</label>
+                                    <textarea id="specialInstructions" rows="2" class="form-control" placeholder="Any allergies, extra crispy, no onions, etc."></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <label class="fw-bold mb-2"><i class="bi bi-credit-card"></i> Payment Method</label>
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <div class="payment-option selected" data-payment="cash" onclick="selectPayment('cash')">
+                                            <i class="bi bi-cash-stack"></i> Cash on Delivery/Pickup
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="payment-option" data-payment="orange" onclick="selectPayment('orange')">
+                                            <i class="bi bi-phone"></i> Orange Money
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="paymentMethod" value="cash">
+                            </div>
+                            
+                            <div class="col-12">
+                                <button type="submit" class="btn-solid w-100" id="placeOrderBtn">
+                                    <i class="bi bi-check-circle"></i> Place Order Now
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="orderStatus" class="mt-3 text-center"></div>
+                </div>
             </div>
-        </nav>
-        <script>
-   
+        </div>
+    </div>
+</main>
+
+<footer class="main-footer">
+    <p>&copy; 2026 The DEN Kitchen - Artisan Bakery & Modern Comfort</p>
+</footer>
+
+<script>
+    // ========== CART FUNCTIONS ==========
+    let cart = JSON.parse(localStorage.getItem('denCart')) || [];
+
+    function saveCart() { localStorage.setItem('denCart', JSON.stringify(cart)); updateCartUI(); }
+
+    function updateCartUI() {
+        const count = cart.reduce((s, i) => s + i.qty, 0);
+        document.querySelectorAll('#globalCartCount').forEach(el => { if(el) el.innerText = count; });
+        const container = document.getElementById('cartItemsList');
+        const totalSpan = document.getElementById('cartTotalAmount');
+        if(!container) return;
+        if(cart.length === 0) { container.innerHTML = '<p class="text-muted text-center mt-4">Cart is empty 🍞</p>'; if(totalSpan) totalSpan.innerText = 'P0.00'; return; }
+        let html = '', total = 0;
+        cart.forEach((item, idx) => { let itemTotal = item.price * item.qty; total += itemTotal;
+            html += `<div class="cart-item"><div><strong>${item.name}</strong><br><small>P${item.price} each</small></div>
+            <div class="cart-item-actions"><button onclick="updateQty(${idx},-1)">-</button><span class="mx-1">${item.qty}</span><button onclick="updateQty(${idx},1)">+</button>
+            <button onclick="removeItem(${idx})" style="background:none; color:#999;">🗑</button></div><div>P${itemTotal.toFixed(2)}</div></div>`;
+        });
+        container.innerHTML = html; totalSpan.innerText = `P${total.toFixed(2)}`;
+    }
+
+    function updateQty(idx, delta) { let newQty = cart[idx].qty + delta; if(newQty <= 0) cart.splice(idx,1); else cart[idx].qty = newQty; saveCart(); renderOrderSummary(); }
+    function removeItem(idx) { cart.splice(idx,1); saveCart(); renderOrderSummary(); showToast('Item removed'); }
+    function clearFullCart() { if(confirm('Clear your entire cart?')) { cart = []; saveCart(); closeCart(); renderOrderSummary(); showToast('Cart cleared'); } }
+    function showToast(msg) { let t = document.createElement('div'); t.className = 'toast-msg'; t.innerHTML = msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2000); }
+    function openCart() { document.getElementById('cartSidebar').classList.add('open'); document.getElementById('cartOverlay').style.display = 'block'; updateCartUI(); }
+    function closeCart() { document.getElementById('cartSidebar').classList.remove('open'); document.getElementById('cartOverlay').style.display = 'none'; }
+    function goToCheckout() { closeCart(); window.location.href = 'orderonline.html'; }
+
+    function renderOrderSummary() {
+        const container = document.getElementById('orderSummaryContainer');
+        const subtotalSpan = document.getElementById('subtotal');
+        const totalSpan = document.getElementById('totalAmount');
+        const deliveryFeeSpan = document.getElementById('deliveryFeeDisplay');
+        
+        if (!container) return;
+        
+        if (cart.length === 0) {
+            container.innerHTML = `<div class="empty-cart-message"><i class="bi bi-cart-x" style="font-size: 48px; color: #ccc;"></i><p class="mt-2">Your cart is empty</p><a href="menu.html" class="btn-solid btn-sm">Browse Menu</a></div>`;
+            subtotalSpan.innerText = 'P0.00';
+            totalSpan.innerText = 'P0.00';
+            deliveryFeeSpan.innerText = 'P0.00';
+            return;
+        }
+        
+        let html = '';
+        let subtotal = 0;
+        
+        cart.forEach(item => {
+            const itemTotal = item.price * item.qty;
+            subtotal += itemTotal;
+            html += `<div class="cart-item-summary"><div><strong>${item.name}</strong><br><small class="text-muted">P${item.price} x ${item.qty}</small></div><div class="fw-bold">P${itemTotal.toFixed(2)}</div></div>`;
+        });
+        
+        container.innerHTML = html;
+        subtotalSpan.innerText = `P${subtotal.toFixed(2)}`;
+        
+        const orderTypeSelect = document.getElementById('orderType');
+        const deliveryFee = (orderTypeSelect && orderTypeSelect.value === 'delivery') ? 30 : 0;
+        deliveryFeeSpan.innerText = `P${deliveryFee.toFixed(2)}`;
+        totalSpan.innerText = `P${(subtotal + deliveryFee).toFixed(2)}`;
+    }
+
+    function updateDeliveryFee() {
+        const orderType = document.getElementById('orderType').value;
+        const subtotal = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+        const deliveryFee = (orderType === 'delivery') ? 30 : 0;
+        document.getElementById('deliveryFeeDisplay').innerText = `P${deliveryFee.toFixed(2)}`;
+        document.getElementById('totalAmount').innerText = `P${(subtotal + deliveryFee).toFixed(2)}`;
+        
+        const addressField = document.getElementById('addressField');
+        addressField.style.display = (orderType === 'delivery') ? 'block' : 'none';
+        
+        const minOrder = (orderType === 'delivery') ? 150 : 50;
+        if (subtotal < minOrder && subtotal > 0) {
+            document.getElementById('orderStatus').innerHTML = `<div class="alert alert-warning">⚠️ Minimum order for ${orderType} is P${minOrder}. Current subtotal: P${subtotal}</div>`;
+        } else {
+            document.getElementById('orderStatus').innerHTML = '';
+        }
+    }
+
+    function selectPayment(method) {
+        document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+        document.querySelector(`.payment-option[data-payment="${method}"]`).classList.add('selected');
+        document.getElementById('paymentMethod').value = method;
+    }
+
+    // Order submission
+    const orderForm = document.getElementById('orderForm');
+    
+    orderForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const fullName = document.getElementById('fullName').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const orderType = document.getElementById('orderType').value;
+        const address = document.getElementById('address')?.value.trim() || '';
+        const email = document.getElementById('email').value.trim();
+        const pickupTime = document.getElementById('pickupTime').value;
+        const specialInstructions = document.getElementById('specialInstructions').value.trim();
+        const paymentMethod = document.getElementById('paymentMethod').value;
+        
+        if (!fullName || !phone || !orderType) {
+            document.getElementById('orderStatus').innerHTML = '<div class="alert alert-danger">Please fill all required fields</div>';
+            return;
+        }
+        
+        if (orderType === 'delivery' && !address) {
+            document.getElementById('orderStatus').innerHTML = '<div class="alert alert-danger">Please provide a delivery address</div>';
+            return;
+        }
+        
+        const subtotal = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+        const deliveryFee = (orderType === 'delivery') ? 30 : 0;
+        const total = subtotal + deliveryFee;
+        const minOrder = (orderType === 'delivery') ? 150 : 50;
+        
+        if (subtotal < minOrder) {
+            document.getElementById('orderStatus').innerHTML = `<div class="alert alert-danger">Minimum order for ${orderType} is P${minOrder}. Current subtotal: P${subtotal}</div>`;
+            return;
+        }
+        
+        if (cart.length === 0) {
+            document.getElementById('orderStatus').innerHTML = '<div class="alert alert-danger">Your cart is empty. Add items first.</div>';
+            return;
+        }
+        
+        const order = {
+            orderId: 'DEN-' + Date.now(),
+            customer: { fullName, phone, email },
+            orderType: orderType,
+            address: address,
+            pickupTime: pickupTime,
+            specialInstructions: specialInstructions,
+            paymentMethod: paymentMethod,
+            items: [...cart],
+            subtotal: subtotal,
+            deliveryFee: deliveryFee,
+            total: total,
+            status: 'Pending',
+            orderDate: new Date().toISOString()
+        };
+        
+        let orders = JSON.parse(localStorage.getItem('denOrders') || '[]');
+        orders.push(order);
+        localStorage.setItem('denOrders', JSON.stringify(orders));
+        
+        cart = [];
+        localStorage.setItem('denCart', JSON.stringify(cart));
+        
+        document.getElementById('orderStatus').innerHTML = `<div class="alert alert-success">✓ Order placed successfully!<br><strong>Order ID:</strong> ${order.orderId}<br>We will contact you shortly at ${phone} to confirm.</div>`;
+        orderForm.reset();
+        document.getElementById('addressField').style.display = 'none';
+        document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+        document.querySelector('.payment-option[data-payment="cash"]').classList.add('selected');
+        
+        renderOrderSummary();
+        updateCartUI();
+        
+        const toast = document.createElement('div');
+        toast.className = 'success-toast';
+        toast.innerHTML = `✅ Order #${order.orderId} placed! We'll call you soon.`;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 4000);
+        
+        document.getElementById('orderStatus').scrollIntoView({ behavior: 'smooth' });
+    });
+    
+    document.getElementById('orderType')?.addEventListener('change', function() { updateDeliveryFee(); renderOrderSummary(); });
+    
     const navToggle = document.getElementById('navToggleBtn');
     const navLinks = document.getElementById('navLinks');
-    
-
     if (navToggle && navLinks) {
-        navToggle.addEventListener('click', function() {
-            navLinks.classList.toggle('open');
-        });
+        navToggle.addEventListener('click', function() { navLinks.classList.toggle('open'); });
     }
+    
+    renderOrderSummary();
+    updateCartUI();
+    window.selectPayment = selectPayment;
+    window.updateQty = updateQty;
+    window.removeItem = removeItem;
+    window.clearFullCart = clearFullCart;
+    window.openCart = openCart;
+    window.closeCart = closeCart;
+    window.goToCheckout = goToCheckout;
 </script>
-<main></main>
- <main>
-        <div class="hero-section" id="mainHero">
-            <div class="hero-card">
-                <h1><i class="bi bi-cart"></i>Place an Order</h1>
-        <p>Fill out the form below to place your order for pickup or delivery.</p>
-    </div>
-        </div>
-    <div class="glass-card">
-        <form>
-            <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" placeholder="Your Name">
-            </div>
-            <div class="mb-3">
-                <label for="phone" class="form-label">Phone</label>
-                <input type="tel" class="form-control" id="phone" placeholder="Your Phone Number">
-            </div>
-            <div class="mb-3">
-                <label for="Order" class="form-label">Order Details</label>
-                <textarea class="form-control" id="Order" placeholder="Please specify your order"></textarea>
-            </div>
-        </form>
-    </div>
- </div>
-    </div>
-</main>
-
-<main>
-    <footer class="main-footer">
-        <p>&copy; 2026 The DEN Kitchen - Artisan Bakery & Modern Comfort</p>
-    </footer>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
-</main>
-</body
+</body>
 </html>
